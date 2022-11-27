@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-// register(Create)/Authenticate User
-router.post('/', async (req, res) => {
+// register
+router.post('/', asyncHandler(async (req, res) => {
     if (req.query.action === 'register') {  //if action is 'register' then save to DB
         await User(req.body).save();
         res.status(201).json({
@@ -19,16 +19,20 @@ router.post('/', async (req, res) => {
             msg: 'Successful created new user.',
         });
     }
-    else {  //Must be an authenticate then!!! Query the DB and check if there's a match
-        const user = await User.findOne(req.body);
-        if (!user) {
-            return res.status(401).json({ code: 401, msg: 'Authentication failed' });
-        }else{
-            return res.status(200).json({ code: 200, msg: "Authentication Successful", token: 'TEMPORARY_TOKEN' });
+    else {  //NEW CODE!!!
+        const user = await User.findByUserName(req.body.username);
+        if (user.comparePassword(req.body.password)) {
+            req.session.user = req.body.username;
+            req.session.authenticated = true;
+            res.status(200).json({
+                success: true,
+                token: "temporary-token"
+              });
+        } else {
+            res.status(401).json('authentication failed');
         }
     }
-});
-
+}));
 // Update a user
 router.put('/:id', async (req, res) => {
     if (req.body._id) delete req.body._id;
