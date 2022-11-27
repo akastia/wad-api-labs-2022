@@ -6,6 +6,8 @@ import movieModel from '../movies/movieModel';
 
 const router = express.Router(); // eslint-disable-line
 
+let pswRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+
 // Get all users
 router.get('/', async (req, res) => {
     const users = await User.find();
@@ -19,8 +21,13 @@ router.post('/',asyncHandler( async (req, res, next) => {
       return next();
     }
     if (req.query.action === 'register') {
-      await User.create(req.body);
-      res.status(201).json({code: 201, msg: 'Successful created new user.'});
+        if (pswRegex.test(req.body.password)){
+        await User.create(req.body);
+        res.status(201).json({code: 201, msg: 'Successful created new user.'});
+        }
+        else{ 
+            res.status(201).json({code: 401, msg: 'Incorrect password format.'});
+        }
     } else {
       const user = await User.findByUserName(req.body.username);
         if (!user) return res.status(401).json({ code: 401, msg: 'Authentication failed. User not found.' });
@@ -57,9 +64,14 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const userName = req.params.userName;
     const movie = await movieModel.findByMovieDBId(newFavourite);
     const user = await User.findByUserName(userName);
-    await user.favourites.push(movie._id);
-    await user.save(); 
-    res.status(201).json(user); 
+    if (user.favourites.indexOf(movie._id)== -1){
+        await user.favourites.push(movie._id);
+        await user.save(); 
+        res.status(201).json(user); 
+    } else {
+        res.status(209).json({code: 209, msg: "Duplicates cannot be added."});
+    }
+    
   }));
 
   router.get('/:userName/favourites', asyncHandler( async (req, res) => {
