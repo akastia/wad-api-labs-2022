@@ -21,12 +21,13 @@ router.post('/',asyncHandler( async (req, res, next) => {
       return next();
     }
     if (req.query.action === 'register') {
+        // Checks the with the regex the password that has been given
         if (pswRegex.test(req.body.password)){
         await User.create(req.body);
         res.status(201).json({code: 201, msg: 'Successful created new user.'});
         }
         else{ 
-            res.status(201).json({code: 401, msg: 'Incorrect password format.'});
+            res.status(401).json({code: 401, msg: 'Incorrect password format.'});
         }
     } else {
       const user = await User.findByUserName(req.body.username);

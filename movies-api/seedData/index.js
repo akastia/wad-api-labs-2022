@@ -34,24 +34,23 @@ export async function loadMovies() {
   }
 }
 
-if (process.env.SEED_DB) {
-  loadUsers();
-  loadGenres();//you may not need this line if you skipped the exercises
-  loadMovies();//ADD THIS LINE
-}
-
 // deletes all genres documents in collection and inserts test data
 async function loadGenres() {
-    console.log('load genre Data');
-    try {
-      await genreModel.deleteMany();
-      await genreModel.collection.insertMany(genres);
-      console.info(`${genres.length} genres were successfully stored.`);
-    } catch (err) {
-      console.error(`failed to Load genre Data: ${err}`);
-    }
+  console.log('load genre Data');
+  try {
+    await genreModel.deleteMany();
+    await genreModel.collection.insertMany(genres);
+    console.info(`${genres.length} genres were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load genre Data: ${err}`);
   }
-  
-  if (process.env.SEED_DB) {
-    loadGenres();
+}
+
+
+
+
+if (process.env.SEED_DB) {
+  loadUsers();
+  loadGenres();
+  loadMovies();
 }
