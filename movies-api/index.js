@@ -7,6 +7,8 @@ import genresRouter from './api/genres';
 import usersRouter from './api/users';
 import session from 'express-session';
 import passport from './authenticate';
+import https from 'https';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -19,7 +21,10 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍. Here's the details: ${err.stack} `);
 };
 
-
+const options={
+  key: fs.readFileSync('keys/expressApp.key'),
+  cert: fs.readFileSync('keys/expressApp.crt')
+}
 
 const app = express();
 
@@ -35,3 +40,9 @@ app.use(errHandler);
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
+
+// const tlsServer=https.createServer(options,app);
+
+// tlsServer.listen(8081,()=>{
+//   console.log('Secure server is listening on port 8081')
+//   })
