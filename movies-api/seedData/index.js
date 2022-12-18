@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import genres from './genres'
 import genreModel from '../api/genres/genreModel'
 import movieModel from '../api/movies/movieModel';
-import movies from './movies.js';
+import getMovies from '../api/tmdb-api'
 
 
 dotenv.config();
@@ -24,8 +24,9 @@ async function loadUsers() {
 // deletes all movies documents in collection and inserts test data
 export async function loadMovies() {
   console.log('load seed data');
-  console.log(movies.length);
+  // console.log(movies.length);
   try {
+    const movies = await getMovies();
     await movieModel.deleteMany();
     await movieModel.collection.insertMany(movies);
     console.info(`${movies.length} Movies were successfully stored.`);
@@ -45,8 +46,6 @@ async function loadGenres() {
     console.error(`failed to Load genre Data: ${err}`);
   }
 }
-
-
 
 
 if (process.env.SEED_DB) {

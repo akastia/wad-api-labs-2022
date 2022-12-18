@@ -25,6 +25,9 @@ import MovieProvider from './moviesContext';
               <Link to="/movies">Movies</Link>
             </li>
             <li>
+              <Link to="/upcomning">Upcoming</Link>
+            </li>
+            <li>
               <Link to="/profile">Profile</Link>
             </li>
           </ul>
