@@ -3,6 +3,7 @@ import User from './userModel';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import movieModel from '../movies/movieModel';
+import actorsModel from '../actors/actorsModel';
 
 const router = express.Router(); // eslint-disable-line
 
@@ -64,6 +65,9 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const newFavourite = req.body.id;
     const userName = req.params.userName;
     const movie = await movieModel.findByMovieDBId(newFavourite);
+    if (movie == null){
+        res.status(401).json({ code: 401, msg: 'The movie id not exits' });
+      }
     const user = await User.findByUserName(userName);
     if (user.favourites.indexOf(movie._id)== -1){
         await user.favourites.push(movie._id);
@@ -98,6 +102,30 @@ router.post('/', asyncHandler(async (req, res) => {
             return res.status(200).json({ code: 200, msg: "Authentication Successful", token: 'TEMPORARY_TOKEN' })
         }
     }
+}));
+
+router.post('/:userName/fav_actors', asyncHandler(async (req, res) => {
+  const newFavActors = req.body.id;
+  const userName = req.params.userName;
+  const actor = await actorsModel.findByActorDBId(newFavActors);
+  if (actor == null){
+    res.status(401).json({ code: 401, msg: 'The actor id not exits' });
+  }
+  const user = await User.findByUserName(userName);
+  if (user.fav_actors.indexOf(actor._id)==-1){
+    await user.fav_actors.push(actor._id);
+    await user.save(); 
+    res.status(201).json(user); 
+  }else{
+    res.status(404).json({ code: 404, msg: 'Unable to add duplicates' });
+  }
+
+}));
+
+router.get('/:userName/fav_actors', asyncHandler( async (req, res) => {
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName).populate('fav_actors');
+  res.status(200).json(user.fav_actors);
 }));
 
 export default router;
