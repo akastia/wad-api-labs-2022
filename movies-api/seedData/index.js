@@ -1,10 +1,13 @@
 import userModel from '../api/users/userModel';
 import users from './users';
 import dotenv from 'dotenv';
-import genres from './genres'
-import genreModel from '../api/genres/genreModel'
+import genres from './genres';
+import genreModel from '../api/genres/genreModel';
 import movieModel from '../api/movies/movieModel';
-import getMovies from '../api/tmdb-api'
+import getMovies from '../api/tmdb-api';
+import actorsModel from '../api/actors/actorsModel';
+import actors from './actors.js';
+import movies from './movies.js';
 
 
 dotenv.config();
@@ -47,9 +50,21 @@ async function loadGenres() {
   }
 }
 
+export async function loadActors() {
+  console.log('load seed data');
+  console.log(actors.length);
+  try {
+    await actorsModel.deleteMany();
+    await actorsModel.collection.insertMany(actors);
+    console.info(`${actors.length} Actors were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load actor Data: ${err}`);
+  }
+}
 
 if (process.env.SEED_DB) {
   loadUsers();
   loadGenres();
   loadMovies();
+  loadActors();
 }
