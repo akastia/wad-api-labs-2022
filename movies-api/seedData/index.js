@@ -1,12 +1,10 @@
 import userModel from '../api/users/userModel';
 import users from './users';
 import dotenv from 'dotenv';
-// import genres from './genres';
 import genreModel from '../api/genres/genreModel';
 import movieModel from '../api/movies/movieModel';
-import getMovies from '../api/tmdb-api';
 import actorsModel from '../api/actors/actorsModel';
-// import actors from './actors.js';
+
 
 const {getMovies, getGenres, getActors} = require('../api/tmdb-api')
 
