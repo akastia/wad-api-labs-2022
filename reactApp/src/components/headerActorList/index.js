@@ -4,13 +4,13 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 
 
 const HeaderActor = (props ) => {
   const name = props.name
-  const navigate = useNavigate();
+  const navigate = Redirect();
 
   return (
     <Paper 

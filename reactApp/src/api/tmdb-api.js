@@ -27,7 +27,7 @@ export const getMovie = (args) => {
  });
 };
 
-export const getUpcomingMovies = () => {
+export const getUpcomingMovie = () => {
     return fetch(
         `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
     ).then((response) => {

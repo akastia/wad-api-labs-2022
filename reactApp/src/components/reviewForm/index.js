@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useForm, Controller } from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { useNavigate } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
 import Snackbar from "@mui/material/Snackbar";
@@ -25,7 +25,7 @@ const ReviewForm = ({ movie }) => {
     handleSubmit,
     reset,
   } = useForm(defaultValues);
-  const navigate = useNavigate();
+  const navigate = Redirect();
   const context = useContext(MoviesContext);
   const [rating, setRating] = useState(3);
 

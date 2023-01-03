@@ -5,11 +5,11 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { useNavigate } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const MovieHeader = (props) => {
   const movie = props.movie;
-  const navigate = useNavigate();
+  const navigate = Redirect();
 
   return (
     <Paper 
