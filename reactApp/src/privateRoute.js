@@ -1,5 +1,5 @@
 import React, { useContext} from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import {AuthContext} from './contexts/authContext'
 
 const PrivateRoute = props => {
@@ -10,7 +10,7 @@ const PrivateRoute = props => {
   return context.isAuthenticated === true ? (
     <Route {...rest} render={props => <Component {...props} />} />
   ) : (
-    <Redirect
+    <Navigate
       to={{
         pathname: "/login",
         state: { from: props.location }

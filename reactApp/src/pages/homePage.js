@@ -18,10 +18,10 @@ const HomePage = (props) => {
   }  
   const movies = data.results;
 
-  // Redundant, but necessary to avoid app crashing.
-  const favourites = movies.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  const addToFavourites = (movieId) => true 
+  // // Redundant, but necessary to avoid app crashing.
+  // const favourites = movies.filter(m => m.favourite)
+  // localStorage.setItem('favourites', JSON.stringify(favourites))
+  // const addToFavourites = (movieId) => true 
   
 
   return (

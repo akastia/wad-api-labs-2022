@@ -5,11 +5,11 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const TvHeader = ({ tv }) => {
   
-  const navigate = Redirect();
+  const navigate = Navigate();
 
   return (
     <Paper 
