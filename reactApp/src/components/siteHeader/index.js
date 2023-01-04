@@ -53,6 +53,8 @@ const SiteHeader = ({ history }) => {
     { label: "Must Watch", path: "/movies/playlist" },
     { label: "Actors", path: "/actors" },
     { label: "Favourite Actors", path: "/actors/favourites" },
+    { label: "Login", path:"/login"},
+    { label: "SignUp", path:"/signup"}
   ];
 
   const tvShowOptions = [

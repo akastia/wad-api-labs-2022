@@ -26,6 +26,8 @@ import TopTvPage from "./pages/topRatedTvPage";
 import AiringTvPage from "./pages/airingTvPage";
 import LoginPage from "./pages/loginPage";
 import SignUpPage from "./pages/signUpPage";
+import PrivateRoute from "./privateRoute";
+import AuthContextProvider from "./contexts/authContext";
 
 
 const queryClient = new QueryClient({
@@ -42,6 +44,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+      <AuthContextProvider>
         <SiteHeader />
         <MoviesContextProvider>
           <ActorsContextProvider>
@@ -55,6 +58,7 @@ const App = () => {
                 <Route path="/movies/playlist" element={ <PlaylistMoviesPage /> } />
                 <Route path="/movies/top_movies" element={<TopMoviesPage/>} />
                 <Route path="/movies/now_playing" element={<NowPlayingMoviePage/>} />
+                
                 <Route path="/actors/" element={ <ActorsPage /> } />
                 <Route path="/actors/:id" element={ <ActorDetailsPage /> } />
                 <Route path="/actors/favourites" element={ <FavouriteActorsPage /> } />
@@ -64,12 +68,12 @@ const App = () => {
                 <Route path="/tv_shows/:id" element={ <TvShowDetailsPage /> } />          
                 <Route path="/tv_shows/top_tv" element={ <TopTvPage /> }/> 
                 <Route path="/tv_shows/airing_today" element={ <AiringTvPage /> }/>
-                <Route exact path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
+                
               </Routes>
             </TvShowsContextProvider>
           </ActorsContextProvider>
         </MoviesContextProvider>
+        </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
