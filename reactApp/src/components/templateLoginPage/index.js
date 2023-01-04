@@ -10,7 +10,6 @@ const TemplateLoginPage = props => {
   const context = useContext(AuthContext)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [unregistered, setUnregistered] = useState(false);
 
 
   const login = () => {
